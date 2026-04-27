@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-display: "DM Serif Display", serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    background: #08111f;
+    color: #f6ecd6;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background:
+      linear-gradient(rgba(251, 191, 36, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(251, 191, 36, 0.035) 1px, transparent 1px),
+      radial-gradient(circle at 20% 10%, rgba(180, 83, 9, 0.18), transparent 28rem),
+      radial-gradient(circle at 90% 0%, rgba(59, 130, 246, 0.13), transparent 30rem),
+      #08111f;
+    background-size: 42px 42px, 42px 42px, auto, auto, auto;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+@layer utilities {
+  .panel-border {
+    border: 1px solid rgba(245, 158, 11, 0.18);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .gold-glow {
+    box-shadow: 0 0 32px rgba(245, 158, 11, 0.24);
+  }
+}
