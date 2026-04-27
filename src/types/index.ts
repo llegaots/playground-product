@@ -41,7 +41,8 @@ export interface Contact {
   created_at: string;
   updated_at: string;
   tags?: Tag[];
-  mutual_connection_ids?: string[];
+  tag_ids: string[];
+  mutual_connection_ids: string[];
 }
 
 export interface Connection {
@@ -73,8 +74,11 @@ export interface GraphNode {
   color: string;
   tags: string[];
   contact: Contact;
+  connectionCount: number;
   x?: number;
   y?: number;
+  fx?: number;
+  fy?: number;
 }
 
 export interface GraphLink {
@@ -93,18 +97,34 @@ export interface ContactFormValues {
   phone?: string;
   linkedin_url?: string;
   how_met: HowWeMet;
-  introduced_by_contact_id?: string;
+  introduced_by_contact_id?: string | null;
   date_first_met?: string;
   location_met?: string;
-  relationship_strength: RelationshipStrength;
-  tags: string[];
+  relationship_strength: number;
   notes?: string;
   last_contacted_at?: string;
   source: ContactSource;
   one_liner_note?: string;
-  mutual_connection_ids: string[];
-  tag_labels: string[];
+  second_degree_through_contact_id?: string;
+  mutual_connection_ids?: string[];
+  tag_labels?: string[];
 }
+
+export const howMetLabels: Record<HowWeMet, string> = {
+  zoom_call: "Zoom call",
+  in_person: "In-person",
+  introduced_by: "Intro'd by contact",
+  conference: "Conference",
+  other: "Other",
+};
+
+export const strengthLabels: Record<RelationshipStrength, string> = {
+  1: "Cold",
+  2: "Cool",
+  3: "Lukewarm",
+  4: "Warm",
+  5: "Inner circle",
+};
 
 export interface DashboardStats {
   totalContacts: number;

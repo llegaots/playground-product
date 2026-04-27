@@ -1,10 +1,10 @@
 import { create } from "zustand";
+import type { ContactFormValues } from "@/lib/contactSchema";
 import { supabase } from "@/lib/supabase";
 import type {
   ActivityLog,
   Connection,
   Contact,
-  ContactFormValues,
   DashboardStats,
   HowWeMet,
   Tag,
@@ -37,8 +37,7 @@ type ContactState = {
 const normalizeContact = (row: Contact): Contact => ({
   ...row,
   tag_ids: row.tags?.map((tag) => tag.id) ?? row.tag_ids ?? [],
-  mutual_connection_ids:
-    row.mutual_connections?.map((contact) => contact.id) ?? row.mutual_connection_ids ?? [],
+  mutual_connection_ids: row.mutual_connection_ids ?? [],
 });
 
 const ensureTags = async (labels: string[], existingTags: Tag[]) => {
@@ -162,7 +161,7 @@ export const useContactStore = create<ContactState>((set, get) => ({
       (contact) =>
         normalizeContact({
           ...contact,
-          tags: contact.tags?.map((joinRow) => joinRow.tags) ?? [],
+          tags: contact.tags?.map((joinRow: { tags: Tag }) => joinRow.tags) ?? [],
         }),
     );
 

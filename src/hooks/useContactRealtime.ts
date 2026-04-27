@@ -6,12 +6,16 @@ export function useContactRealtime() {
   const fetchAll = useContactStore((state) => state.fetchAll);
 
   useEffect(() => {
+    const refresh = () => {
+      void fetchAll();
+    };
+
     const channel = supabase
       .channel("relationship-intelligence")
-      .on("postgres_changes", { event: "*", schema: "public", table: "contacts" }, fetchAll)
-      .on("postgres_changes", { event: "*", schema: "public", table: "connections" }, fetchAll)
-      .on("postgres_changes", { event: "*", schema: "public", table: "contact_tags" }, fetchAll)
-      .on("postgres_changes", { event: "*", schema: "public", table: "activity_log" }, fetchAll)
+      .on("postgres_changes", { event: "*", schema: "public", table: "contacts" }, refresh)
+      .on("postgres_changes", { event: "*", schema: "public", table: "connections" }, refresh)
+      .on("postgres_changes", { event: "*", schema: "public", table: "contact_tags" }, refresh)
+      .on("postgres_changes", { event: "*", schema: "public", table: "activity_log" }, refresh)
       .subscribe();
 
     return () => {

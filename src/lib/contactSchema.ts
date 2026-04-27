@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const howMetOptions = [
-  "Zoom call",
-  "In-person",
-  "Intro'd by contact",
-  "Conference",
-  "Other",
+  { label: "Zoom call", value: "zoom_call" },
+  { label: "In-person", value: "in_person" },
+  { label: "Intro'd by contact", value: "introduced_by" },
+  { label: "Conference", value: "conference" },
+  { label: "Other", value: "other" },
 ] as const;
 
 export const contactSourceOptions = ["manual", "zoom_auto_import"] as const;
@@ -35,8 +35,9 @@ export const contactFormSchema = z.object({
   one_liner_note: z.string().trim().optional().or(z.literal("")),
   last_contacted_at: z.string().optional().or(z.literal("")),
   source: z.enum(contactSourceOptions),
-  tag_labels: z.array(z.string()).default([]),
-  mutual_connection_ids: z.array(z.string().uuid()).default([]),
+  second_degree_through_contact_id: z.string().uuid().optional().nullable().or(z.literal("")),
+  tag_labels: z.array(z.string()),
+  mutual_connection_ids: z.array(z.string().uuid()),
 });
 
 export const quickAddSchema = z.object({

@@ -65,9 +65,8 @@ function AppShell() {
             <QuickAddContact />
             <Button
               variant="ghost"
-              onClick={async () => {
-                await signOut();
-                navigate("/login");
+              onClick={() => {
+                void signOut().then(() => navigate("/login"));
               }}
             >
               <LogOut className="h-4 w-4" />

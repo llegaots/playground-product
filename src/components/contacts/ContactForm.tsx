@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
-import { contactFormSchema, howMetOptions } from "@/lib/contactSchema";
+import { contactFormSchema, howMetOptions, type ContactFormValues } from "@/lib/contactSchema";
 import { useContactStore } from "@/store/contactStore";
-import type { Contact, ContactFormValues } from "@/types";
+import type { Contact } from "@/types";
 
 type ContactFormProps = {
   contact?: Contact;
@@ -101,7 +101,7 @@ export function ContactForm({ contact, mode = "full", onDone }: ContactFormProps
   const errors = form.formState.errors;
 
   return (
-    <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+    <form className="space-y-4" onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}>
       <Input label="Full name" error={errors.full_name?.message} {...form.register("full_name")} />
 
       <div className="grid gap-4 md:grid-cols-2">

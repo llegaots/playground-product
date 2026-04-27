@@ -26,7 +26,7 @@ export function ContactDetailPanel() {
 
   const connections = useMemo(() => {
     if (!contact) return [];
-    return contacts.filter((item) => contact.mutual_connection_ids.includes(item.id));
+    return contacts.filter((item) => (contact.mutual_connection_ids ?? []).includes(item.id));
   }, [contact, contacts]);
 
   if (!contact) return null;
@@ -162,7 +162,7 @@ export function ContactDetailPanel() {
                 onChange={(event) => setNote(event.target.value)}
                 placeholder="Log a note about this person..."
               />
-              <Button onClick={logNote} size="sm">
+              <Button onClick={() => void logNote()} size="sm">
                 <Plus size={14} /> Log a note
               </Button>
               <div className="space-y-3 border-t border-white/10 pt-3">
@@ -182,7 +182,7 @@ export function ContactDetailPanel() {
       </div>
 
       <div className="mt-5 flex flex-wrap gap-2 border-t border-white/10 pt-4">
-        <Button onClick={() => markContactedToday(contact.id)}>
+        <Button onClick={() => void markContactedToday(contact.id)}>
           <CalendarCheck size={16} /> Mark contacted today
         </Button>
         <Button variant="secondary" onClick={() => setEditing((value) => !value)}>

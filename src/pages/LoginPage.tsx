@@ -54,7 +54,12 @@ export const LoginPage = () => {
           account and keep registration closed in Supabase once provisioned.
         </p>
 
-        <form onSubmit={onSubmit} className="mt-8 space-y-4">
+        <form
+          onSubmit={(event) => {
+            void onSubmit(event);
+          }}
+          className="mt-8 space-y-4"
+        >
           <Input label="Email" type="email" error={errors.email?.message} {...register("email")} />
           <Input
             label="Password"

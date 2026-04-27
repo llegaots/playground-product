@@ -16,7 +16,7 @@ export function QuickAddContact() {
     defaultValues: {
       full_name: "",
       how_met: "other",
-      note: "",
+      one_liner_note: "",
     },
   });
 
@@ -35,12 +35,11 @@ export function QuickAddContact() {
       location_met: "",
       relationship_strength: 3,
       tag_labels: [],
-      notes: values.note,
-      one_liner_note: values.note,
+      notes: values.one_liner_note,
+      one_liner_note: values.one_liner_note,
       last_contacted_at: "",
       source: "manual",
       mutual_connection_ids: [],
-      second_degree_through_contact_id: "",
     });
     form.reset();
     setOpen(false);
@@ -50,7 +49,9 @@ export function QuickAddContact() {
     <div className="fixed bottom-6 right-6 z-30">
       {open ? (
         <form
-          onSubmit={onSubmit}
+          onSubmit={(event) => {
+            void onSubmit(event);
+          }}
           className="mb-3 w-80 rounded-3xl border border-amber-400/30 bg-slate-950/95 p-4 shadow-2xl shadow-amber-950/40 backdrop-blur"
         >
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-amber-300">Quick add</p>
@@ -63,7 +64,7 @@ export function QuickAddContact() {
                 </option>
               ))}
             </Select>
-            <Input label="One-liner note" {...form.register("note")} />
+            <Input label="One-liner note" {...form.register("one_liner_note")} />
           </div>
           <div className="mt-4 flex gap-2">
             <Button type="submit" size="sm" disabled={form.formState.isSubmitting}>

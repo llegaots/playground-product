@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { useContactStore } from "@/store/contactStore";
-import type { Contact, GraphLink, GraphNode, HowWeMet } from "@/types";
+import type { GraphLink, GraphNode, HowWeMet } from "@/types";
 
 const fallbackColors = ["#d6a84f", "#38bdf8", "#a78bfa", "#34d399", "#f97316", "#e879f9"];
 
@@ -48,7 +48,7 @@ const drawNode = (
 };
 
 export function NetworkGraph() {
-  const graphRef = useRef<ForceGraphMethods<GraphNode, GraphLink>>();
+  const graphRef = useRef<ForceGraphMethods<GraphNode, GraphLink> | undefined>(undefined);
   const {
     contacts,
     connections,
@@ -57,14 +57,14 @@ export function NetworkGraph() {
     howWeMetFilter,
     searchTerm,
     setGraphTagFilter,
-    setHowMetFilter,
+    setHowWeMetFilter,
     setSearchTerm,
     setSelectedContactId,
   } = useContactStore();
 
   const filteredContacts = useMemo(() => {
     return contacts.filter((contact) => {
-      const matchesTag = !graphTagFilter || contact.tag_ids.includes(graphTagFilter);
+      const matchesTag = !graphTagFilter || (contact.tag_ids ?? []).includes(graphTagFilter);
       const matchesHowMet = howWeMetFilter === "all" || contact.how_met === howWeMetFilter;
       return matchesTag && matchesHowMet;
     });
@@ -153,7 +153,7 @@ export function NetworkGraph() {
         </Select>
         <Select
           value={howWeMetFilter}
-          onChange={(event) => setHowMetFilter(event.target.value as HowWeMet | "all")}
+          onChange={(event) => setHowWeMetFilter(event.target.value as HowWeMet | "all")}
         >
           <option value="all">All origins</option>
           <option value="zoom_call">Zoom call</option>
